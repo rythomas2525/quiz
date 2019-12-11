@@ -8,8 +8,8 @@ var answer1 = document.querySelector("#answer1");
 var answer2 = document.querySelector("#answer2");
 var answer3 = document.querySelector("#answer3");
 var answer4 = document.querySelector("#answer4");
-var choiceForQuestions = questionArray
-console.log(choiceForQuestions)
+
+
 
 console.log(questionDivEl)
 console.log(quizEl)
@@ -43,10 +43,24 @@ function startGame() {
     questionCount = 0;
     score = 0;
     questionsList = [questionArray];
-    console.log(questionsList);
     getQuestion();
 
+
 }
+
+
+
+var count = 15;
+var interval = setInterval(function () {
+    document.getElementById('timeleft').innerHTML = (" " + count);
+    count--;
+    if (count === 0) {
+        clearInterval(interval);
+        document.getElementById('timeleft').innerHTML = 'Done';
+
+    }
+}, 1000);
+
 
 
 function getQuestion() {
@@ -68,7 +82,7 @@ function getQuestion() {
 
 
 
-    // questionArray[0].title
+
 }
 
 startGame();
