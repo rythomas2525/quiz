@@ -2,15 +2,15 @@ var questions = document.querySelector("#questions");
 
 var questionArray = [
     {
-        title: "What is an Apple?",
-        choices: ["vegetable", "fruit", "nut", "other"],
-        answer: "fruit"
+        title: "Where do the MLB team Red Sox play?",
+        choices: ["New York", "Boston", "Dallas", "Las Vegas"],
+        answer: "Boston"
 
     },
     {
-        title: "What color are fire trucks?",
-        choices: ["green", "black", "red", "blue"],
-        answer: "red"
+        title: "What city do the NFL team Packers play in",
+        choices: ["Green Bay", "Charleston", "Seattle", "Portland"],
+        answer: "Green Bay"
     },
     {
         title: "Where do the NBA basketball team Bulls play?",
@@ -23,12 +23,10 @@ var questionArray = [
         answer: "Charlotte"
     },
     {
-        title: "What country is the northern neighbor of the Unites States?",
-        choices: ["Mexico", "Canada", "Greenland", "Saudi Arabia"],
-        answer: "Canada"
+        title: "Where do the NHL team Devils Play?",
+        choices: ["Utah", "New Jersey", "Texas", "Virginia"],
+        answer: "New Jersey"
     }
 ];
 
 
-
-console.log(questionArray);
