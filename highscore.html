@@ -22,7 +22,7 @@
             <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
                 <ul class="navbar-nav text-center ">
                     <li class="nav-item active">
-                        <a class=" mr-4" style="color: black; font-size:24px;" href="highscore.html">View High Score</a>
+                        <a class=" mr-4" style="color: black; font-size:24px;" href="index.html">Home</a>
                     </li>
                 </ul>
                 <h4 id="score"></h4>
@@ -33,40 +33,18 @@
 
     <div class="container mt-4 rounded bg-secondary">
         <div class="row justify-content-center mt-4 ">
-            <div id="quiz" class="col-md-5 mt-4 text-center">
-                <h1>Answer This Question!</h1>
-            </div>
-        </div>
-        <div id="questionDiv" class="row justify-content-center mt-4">
-            <h1><span id="questionText"></span>?</h1>
-        </div>
+            <div id="highScoreDiv" class="col-md-8 text-center p-4 mb-4">
+                <h1 id="finalScore">High Scores</h1>
+                <ul id="highScoreList" class=" mt-4">
+                    <h3></h3>
+                </ul>
 
-        <div class="row justify-content-center mt-4">
-            <div class="col-md-3 text-center m-4">
-                <button href="quiz.html" id="answer1" class="btn btn-light choice-text" type="button"
-                    data-number="1">Answer
-                    1</button>
-            </div>
-            <div class="col-md-3 text-center m-4">
-                <button href="quiz.html" id="answer2" class="btn btn-light choice-text" type="button"
-                    data-number="2">Answer
-                    2</button>
             </div>
         </div>
-        <div class="row justify-content-center mt-4">
-            <div class="col-md-3 text-center m-4">
-                <button href="quiz.html" id="answer3" class="btn btn-light choice-text" type="button"
-                    data-number="3">Answer
-                    3</button></div>
-            <div class="col-md-3 text-center m-4">
-                <button href="quiz.html" id="answer4" class="btn btn-light choice-text" type="button"
-                    data-number="4">Answer
-                    4</button>
-            </div>
 
 
 
-        </div>
+    </div>
 
     </div>
 
@@ -80,12 +58,23 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-    <script src="questions.js"></script>
+    <!-- <script src="questions.js"></script>
     <script src="script.js">
 
 
-    </script>
+    </script> -->
+    <script>
+        var highScoreList = document.getElementById("highScoreList");
+        var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
 
+        console.log(highScores)
+
+        highScoreList.children[0].innerText = highScores.map(score => {
+            return score.name + "    " + score.score
+        })
+
+
+    </script>
 </body>
 
 </html>

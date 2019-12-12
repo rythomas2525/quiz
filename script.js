@@ -1,89 +1,96 @@
 
+var question = document.getElementById("questionText");
+const choices = Array.from(document.getElementsByClassName("choice-text"));
+const scoreText = document.getElementById("score");
 
-var questionDivEl = document.querySelector("#questionDiv");
-var quizEl = document.querySelector("#quiz");
-
-var questionText = document.querySelector("#questionText");
-var answer1 = document.querySelector("#answer1");
-var answer2 = document.querySelector("#answer2");
-var answer3 = document.querySelector("#answer3");
-var answer4 = document.querySelector("#answer4");
-
-
-
-console.log(questionDivEl)
-console.log(quizEl)
-
-console.log(questionText)
-console.log(answer1)
-console.log(answer2)
-console.log(answer3)
-console.log(answer4)
+let currentQuestion = {};
+let acceptingAnswers = false;
+let score = 0;
+let questionCounter = 0;
+let availableQuestions = [];
 
 
 
-var score = 0;
-var currentQuestion = {};
-var rightAnswers = true;
-var questionsList = 5;
-var questionCount = [];
+const CORRECT_BONUS = 10;
+const MAX_QUESTIONS = 3;
 
 
-var correctScore = 10;
-var maxQuestions = 5;
-
-
-
-
-
-
-
-
-function startGame() {
-    questionCount = 0;
+startGame = () => {
+    questionCounter = 0;
     score = 0;
-    questionsList = [questionArray];
-    getQuestion();
+    availableQuestions = [...questions];
 
+    getNewQuestion();
+};
 
-}
+getNewQuestion = () => {
+    var count = 15;
+    var interval = setInterval(function () {
+        document.getElementById('timeleft').innerHTML = (" " + count);
+        count--;
+        if (count === 0) {
+            clearInterval(interval);
+            document.getElementById('timeleft').innerHTML = '';
 
+        }
+    }, 1000);
 
-
-var count = 15;
-var interval = setInterval(function () {
-    document.getElementById('timeleft').innerHTML = (" " + count);
-    count--;
-    if (count === 0) {
-        clearInterval(interval);
-        document.getElementById('timeleft').innerHTML = 'Done';
-
+    if (availableQuestions.length === 0 || questionCounter > MAX_QUESTIONS) {
+        localStorage.setItem("mostRecentScore", score)
+        return window.location.assign("finish.html");
     }
-}, 1000);
+
+    questionCounter++;
+
+    var questionIndex = Math.floor(Math.random() * availableQuestions.length);
+    currentQuestion = availableQuestions[questionIndex];
+    question.innerText = currentQuestion.title;
 
 
+    choices.forEach(choice => {
+        var number = choice.dataset["number"];
+        choice.innerText = currentQuestion['choice' + number];
+    });
 
-function getQuestion() {
-    questionCount++;
-    var questionIndex = Math.floor(Math.random() * questionsList.length)
-    currentQuestion = questionsList[questionIndex];
-    questionText.innerText = (currentQuestion[0].title)
+    availableQuestions.splice(questionIndex, 1);
 
-    // document.getElementById("answer1").innerText = (currentQuestion[0].choices[0])
-    // document.getElementById("answer2").innerText = (currentQuestion[0].choices[1])
-    // document.getElementById("answer3").innerText = (currentQuestion[0].choices[2])
-    // document.getElementById("answer4").innerText = (currentQuestion[0].choices[3])
+    acceptingAnswers = true;
+};
 
-    choiceForQuestions.forEach(choice => {
-        var number = choices.dataset['number'];
-        choice.innerText = currentQuestion["choices" + number]
-    })
+choices.forEach(choice => {
+    choice.addEventListener("click", e => {
+        if (!acceptingAnswers) return;
+
+        acceptingAnswers = false;
+        var selectedChoice = e.target;
+        var selectedAnswer = selectedChoice.dataset["number"];
 
 
+        var classToApply = "incorrect";
+        if (selectedAnswer == currentQuestion.answer) {
+            classToApply = "correct";
+        }
+        if (classToApply === "correct") {
+            scoreCheck(CORRECT_BONUS)
+        }
+        console.log(classToApply)
 
+        // selectedChoice.parentElement.classList.add(classToApply);
+        // setTimeout(() => { })
+        // selectedChoice.parentElement.classList.remove(classToApply)
 
+        getNewQuestion();
+
+    });
+});
+
+scoreCheck = num => {
+    score += num;
+    scoreText.innerText = score;
 
 }
 
 startGame();
+
+
 
