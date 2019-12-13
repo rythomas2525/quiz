@@ -11,8 +11,9 @@ let availableQuestions = [];
 
 
 
-const CORRECT_BONUS = 10;
-const MAX_QUESTIONS = 3;
+var CORRECT_BONUS = 0;
+var MAX_QUESTIONS = 3;
+
 
 
 startGame = () => {
@@ -23,17 +24,21 @@ startGame = () => {
     getNewQuestion();
 };
 
-getNewQuestion = () => {
-    var count = 15;
-    var interval = setInterval(function () {
-        document.getElementById('timeleft').innerHTML = (" " + count);
-        count--;
-        if (count === 0) {
-            clearInterval(interval);
-            document.getElementById('timeleft').innerHTML = '';
+var count = 60;
+var interval = setInterval(function () {
+    document.getElementById('timeleft').innerHTML = (" " + count);
+    count--;
+    if (count === 0) {
+        clearInterval(interval);
+        document.getElementById('timeleft').innerHTML = '';
 
-        }
-    }, 1000);
+    }
+}, 1000);
+
+// var CORRECT_BONUS = count;
+
+getNewQuestion = () => {
+
 
     if (availableQuestions.length === 0 || questionCounter > MAX_QUESTIONS) {
         localStorage.setItem("mostRecentScore", score)
@@ -63,17 +68,29 @@ choices.forEach(choice => {
 
         acceptingAnswers = false;
         var selectedChoice = e.target;
+        console.log(e.target);
+
         var selectedAnswer = selectedChoice.dataset["number"];
+        console.log(selectedAnswer);
 
 
         var classToApply = "incorrect";
-        if (selectedAnswer == currentQuestion.answer) {
-            classToApply = "correct";
+        console.log(currentQuestion.answer);
+
+        if (selectedAnswer != currentQuestion.answer) {
+            console.log("got it wrong")
+            count -= 15;
+            // classToApply = "correct";
         }
-        if (classToApply === "correct") {
+
+        else {
+
+            console.log("got it right");
+            CORRECT_BONUS += count;
             scoreCheck(CORRECT_BONUS)
+
         }
-        console.log(classToApply)
+
 
         // selectedChoice.parentElement.classList.add(classToApply);
         // setTimeout(() => { })
