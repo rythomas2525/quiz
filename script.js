@@ -11,8 +11,8 @@ let availableQuestions = [];
 
 
 
-var CORRECT_BONUS = 0;
-var MAX_QUESTIONS = 3;
+var ScoreIfCorrect = 0;
+var AmountOfQuestions = 3;
 
 
 
@@ -40,7 +40,7 @@ var interval = setInterval(function () {
 getNewQuestion = () => {
 
 
-    if (availableQuestions.length === 0 || questionCounter > MAX_QUESTIONS) {
+    if (availableQuestions.length === 0 || questionCounter > AmountOfQuestions) {
         localStorage.setItem("mostRecentScore", score)
         return window.location.assign("finish.html");
     }
@@ -57,7 +57,7 @@ getNewQuestion = () => {
         choice.innerText = currentQuestion['choice' + number];
     });
 
-    availableQuestions.splice(questionIndex, 1);
+
 
     acceptingAnswers = true;
 };
@@ -78,16 +78,16 @@ choices.forEach(choice => {
         console.log(currentQuestion.answer);
 
         if (selectedAnswer != currentQuestion.answer) {
-            console.log("got it wrong")
+
             count -= 15;
             // classToApply = "correct";
         }
 
         else {
 
-            console.log("got it right");
-            CORRECT_BONUS += count;
-            scoreCheck(CORRECT_BONUS)
+
+            ScoreIfCorrect += count;
+            scoreFunction(ScoreIfCorrect)
 
         }
 
@@ -101,8 +101,8 @@ choices.forEach(choice => {
     });
 });
 
-scoreCheck = num => {
-    score += num;
+scoreFunction = number => {
+    score += number;
     scoreText.innerText = score;
 
 }
